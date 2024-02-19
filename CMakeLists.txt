@@ -30,4 +30,8 @@ set_target_properties(podcast PROPERTIES ENABLE_EXPORTS ON)
 set_target_properties(podcast PROPERTIES PREFIX "")
 target_link_libraries(podcast
   ${CRAILS_CMS_LIBRARIES}
+  odb-pgsql
   crails-app)
+
+install(TARGETS podcast LIBRARY DESTINATION lib/libcrails-cms)
+install(FILES podcast.description.json podcast.description.png DESTINATION lib/libcrails-cms)
