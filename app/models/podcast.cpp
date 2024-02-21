@@ -1,5 +1,5 @@
 #include "podcast.hpp"
-#include <crails/cms/models/attachment_url.hpp>
+#include <crails/cms/models/attachment_setter.hpp>
 #include <crails/logger.hpp>
 #include <filesystem>
 #include "lib/plugin-odb.hxx"

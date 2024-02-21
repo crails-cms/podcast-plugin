@@ -11,6 +11,7 @@ struct PodcastIndexQuery
   std::string              tag_list;
   std::string              description;
   std::string              thumbnail;
+  std::string              slug;
 
   Podcast to_post() const
   {
@@ -21,6 +22,7 @@ struct PodcastIndexQuery
     post.set_tags(Crails::Cms::TagList(tag_list).to_vector());
     post.set_description(description);
     post.set_thumbnail_url(thumbnail);
+    post.set_slug(slug);
     return post;
   }
 
