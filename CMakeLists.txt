@@ -35,3 +35,4 @@ target_link_libraries(podcast
 
 install(TARGETS podcast LIBRARY DESTINATION lib/libcrails-cms)
 install(FILES podcast.description.json podcast.description.png DESTINATION lib/libcrails-cms)
+install(FILES podcast.fr.json podcast.en.json podcast.es.json DESTINATION locales)

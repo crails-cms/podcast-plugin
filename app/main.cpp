@@ -1,4 +1,5 @@
 #include <string>
+#include <crails/i18n_settings.hpp>
 
 void initialize_plugin_routes();
 void initialize_plugin_renderers();
@@ -14,6 +15,10 @@ extern "C"
 {
   void initialize()
   {
+    i18n::Settings& tsettings = i18n::Settings::singleton::require();
+
+    for (const auto& locale : std::vector<std::string>{"fr", "en", "es"})
+      tsettings.t.add_locale(locale, "locales/podcast." + locale + ".json");
     initialize_plugin_routes();
     initialize_plugin_renderers();
   }

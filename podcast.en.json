@@ -1,0 +1,12 @@
+{
+  "admin": {
+    "menu": {
+      "podcasts": "Podcasts"
+    },
+    "podcast": {
+      "upload": "Audio library"
+    },
+    "new-podcast": "Add a broadcast",
+    "podcast-subtitle": "Manage your audio broadcasts"
+  }
+}

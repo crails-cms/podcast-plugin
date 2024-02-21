@@ -1,0 +1,12 @@
+{
+  "admin": {
+    "menu": {
+      "podcasts": "Podcasts"
+    },
+    "podcast": {
+      "upload": "Biblioteca audio"
+    },
+    "new-podcast": "Nuevo episodio",
+    "podcast-subtitle": "Gestionar transmisiones de audio"
+  }
+}

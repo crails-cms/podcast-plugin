@@ -1,0 +1,12 @@
+{
+  "admin": {
+    "menu": {
+      "podcasts": "Podcasts"
+    },
+    "podcast": {
+      "upload": "Audiothèque"
+    },
+    "new-podcast": "Ajouter un épisode",
+    "podcast-subtitle": "Gérez votre émission audio"
+  }
+}
