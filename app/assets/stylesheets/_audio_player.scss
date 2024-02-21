@@ -1,0 +1,47 @@
+.audio-player-container {
+  display: flex;
+  align-items: center;
+  > div:first-child {
+    flex-grow: 1;
+  }
+  > * {
+    margin: 0 1em;
+  }
+}
+
+.audio-player {
+  .controls {
+    display: flex;
+    align-items: center;
+    .toggle-play, .time, .volume-container {
+      margin: 0 1em;
+    }
+    .toggle-play {
+      &.play {
+        [data-role=pause] { display: none; }
+      }
+      &.pause {
+        [data-role=play] { display: none; }
+      }
+    }
+    .time {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-grow: 2;
+    }
+    .volume-container {
+      display: flex;
+      align-items: center;
+      &.mute {
+        [data-role=default] { display: none; }
+      }
+      &:not(.mute) {
+        [data-role=mute] { display: none; }
+      }
+      .volume-slider {
+        flex-grow: 1;
+      }
+    }
+  }
+}

@@ -21,6 +21,26 @@ crails templates build \
   -p \.json$ \
   -v
 
+crails templates build \
+  -r rss \
+  -i app/views \
+  -t Crails::RssTemplate \
+  -z crails/rss_template.hpp \
+  -n PodcastPluginRssRenderer \
+  -p \.rss$ \
+  -v
+
+##
+## JavaScript && CSS
+##
+npm install
+node_modules/.bin/webpack
+node_modules/.bin/sass -s compressed "app/assets/stylesheets/application.scss" > lib/application.css
+
+xxd -i -n podcast_plugin_application_css lib/application.css lib/application.css.cpp
+xxd -i -n podcast_plugin_application_js lib/application.js lib/application.js.cpp
+#xxd -i -n podcast_plugin_admin_js lib/admin.js lib/admin.js.cpp
+
 ##
 ## Database
 ##
@@ -29,7 +49,6 @@ odb \
   --std c++17 \
   --default-pointer std::shared_ptr \
   -d pgsql \
-  --table-prefix "podcast_" \
   --generate-schema --schema-format sql \
   --generate-query \
   --output-dir lib \

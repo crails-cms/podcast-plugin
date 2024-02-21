@@ -1,0 +1,10 @@
+#include "app/models/podcast.hpp"
+
+using namespace std;
+
+vector<shared_ptr<Crails::Cms::BlogPost>>* @models;
+
+// END LINKING
+<%= partial("admin/podcast/_list", {
+  {"models", reinterpret_cast<vector<shared_ptr<Podcast>>*>(models)}
+}) %>

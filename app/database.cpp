@@ -13,7 +13,6 @@ const char* create_podcast_query =
     "\"body\" TEXT NOT NULL,"
     "\"description\" TEXT NOT NULL,"
     "\"thumbnail\" TEXT NOT NULL,"
-    "\"preview\" BOOLEAN NOT NULL,"
     "\"tag_list\" TEXT NOT NULL,"
     "\"published\" BOOLEAN NOT NULL,"
     "\"publication_at\" BIGINT NOT NULL,"
@@ -38,7 +37,7 @@ const char* constraint_attachment_query =
   "ALTER TABLE \"podcast_Podcast\""
   "  ADD CONSTRAINT \"audio_fk\""
   "  FOREIGN KEY (\"audio\")"
-  "  REFERENCES \"podcast_Attachment\" (\"id\")"
+  "  REFERENCES \"Attachment\" (\"id\")"
   "  INITIALLY DEFERRED;";
 
 void install_plugin_database()

@@ -1,0 +1,44 @@
+#include "app/models/podcast.hpp"
+#include <crails/cms/time.hpp>
+#include <crails/cms/models/settings.hpp>
+#include <crails/cms/local_route.hpp>
+
+const Crails::Cms::Settings& @settings;
+const std::vector<std::unique_ptr<Podcast>>& @models;
+const Crails::Cms::LocalRoute route = Crails::Cms::LocalRoute(vars);
+
+// END LINKING
+<%= xml_header("UTF-8") %>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <%= title(settings.get_title()) %>
+    <%= link("http://" + settings.get_public_url() + route()) %>
+    <atom:link href="http://<%= settings.get_public_url() + route() %>" rel="self" type="application/rss+xml" />
+    <description>
+    </description>
+
+    <% if (models.size() > 0) do -%>
+      <%= last_build_date((*models.begin())->get_updated_at()) %>
+      <% for (const auto& model_ptr : models) do -%>
+        <% const Podcast& model = *model_ptr %>
+        <% const auto tags = model.get_tags() %>
+        <item>
+          <%= guid(model.get_slug()) %>
+          <%= title(model.get_title()) %>
+          <%= publication_date(model.get_publication_at()) %>
+          <% if (tags.size() > 0) do %>
+            <%= category(*tags.begin()) %>
+          <% end %>
+          <%= link("http://" + settings.get_public_url() + route.make(model.get_slug())) %>
+          <%= enclosure("http://" + settings.get_public_url() + model.get_audio_url(), 0, "audio/mp3") %>
+          <%= description() yields %>
+            <% if (model.get_thumbnail_url().length()) do -%>
+              <img src="http://<%= settings.get_public_url() + model.get_thumbnail_url() %>" />
+            <% end -%>
+            <p><%= model.get_description() %></p>
+          <% yields-end %>
+        </item>
+      <% end -%>
+    <% end -%>
+  </channel>
+</rss>

@@ -1,0 +1,79 @@
+#include <crails/i18n.hpp>
+#include <crails/html_form_builder.hpp>
+#include <crails/cms/routes.hpp>
+#include <crails/cms/views/style.hpp>
+#include <crails/cms/time.hpp>
+#include "app/models/podcast.hpp"
+
+using namespace std;
+
+const Crails::Cms::Style&     style = Crails::Cms::Style::singleton::require();
+const Crails::Cms::LocalRoute route = Crails::Cms::LocalRoute(vars);
+const Podcast&                @model;
+map<string, string>           @tag_options;
+bool                          @can_publish = false;
+
+Crails::FormBuilder<Podcast> form = Crails::FormBuilder<Podcast>(this, model);
+
+using namespace Crails::Cms;
+
+// END LINKING
+
+<%= form_for(model, route.make("post"), {{"class",style.form_classes() + "podcast-form"},{"id","main-form"}}) yields %>
+  <%= style.form_group() yields %>
+    <%= form.label_for("title") %>
+    <%= form.text_field("title", &Podcast::get_title, {{"maxlength",std::to_string(Crails::Cms::Editable::title_length)}}) %>
+  <% yields-end %>
+
+  <%= style.form_group() yields %>
+    <%= form.label_for("slug") %>
+    <%= form.text_field("slug", &Podcast::get_slug) %>
+  <% yields-end %>
+
+  <%= style.form_group() yields %>
+    <%= form.label_for("description") %>
+    <%= form.text_area("description", &Podcast::get_description, {{"maxlength",std::to_string(Crails::Cms::Editable::description_length)}}) %>
+  <% yields-end %>
+
+  <%= style.form_group(Crails::Cms::ClassList("thumbnail-form-group")) yields %>
+    <%= form.label_for("thumbnail") %>
+    <%= form.text_field("thumbnail", &Podcast::get_thumbnail_url) %>
+    <%= tag("button", {{"class",style.button_classes()}}) yields %>
+      <%= i18n::t("admin.image-library") %>
+    <% yields-end %>
+    <img />
+  <% yields-end %>
+
+  <%= style.form_group(Crails::Cms::ClassList("tomselect-form-group")) yields %>
+    <%= form.label_for("tags") %>
+    <%= form.select_field("tags", tag_options, &Crails::Cms::BlogPost::get_tags, {{"id","tagPicker"}}) %>
+  <% yields-end %>
+
+  <% if (can_publish) do -%>
+    <%= style.form_group() yields %>
+      <%= form.label_for("published") %>
+      <%= form.boolean_field("published", &Crails::Cms::BlogPost::get_published) %>
+    <% yields-end %>
+  <% end -%>
+
+  <%= style.form_group(Crails::Cms::ClassList("audio-form-group")) yields %>
+    <%= form.label_for("audio_url", i18n::t("admin.podcast.audio-url")) %>
+    <%= form.text_field("audio_url", &Podcast::get_audio_url) %>
+    <%= tag("button", {{"class",style.button_classes()}}) yields %>
+      <%= i18n::t("admin.podcast.upload") %>
+    <% yields-end %>
+    <audio controls />
+  <% yields-end %>
+
+  <%= form.text_area("body", &Podcast::get_body) %>
+<% yields-end %>
+
+<div class="<%= style.button_group_classes() %>">
+  <%= style.admin_submit_button("main-form") %>
+  <%= style.admin_preview_button(route.make("preview")) %>
+  <% if (model.is_persistent()) do %>
+    <%= style.admin_remove_button(*this, route.make("post", model.get_id())) %>
+  <% end %>
+</div>
+
+<script>proudcmsAdminCKEditor("<%= form.scoped_name("body") %>");</script>

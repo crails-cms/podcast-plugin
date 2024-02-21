@@ -1,0 +1,11 @@
+#include "app/models/podcast.hpp"
+
+using namespace std;
+
+const Crails::Cms::BlogPost* @model;
+
+// END LINKING
+<%= partial("admin/podcast/_form", {
+  {"model", reinterpret_cast<const Podcast*>(model)}
+}) %>
+

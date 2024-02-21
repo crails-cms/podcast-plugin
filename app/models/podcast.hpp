@@ -2,7 +2,7 @@
 #include <crails/cms/models/blog/post.hpp>
 #include "app/models/attachment.hpp"
 
-#pragma db object
+#pragma db object table("podcast_Podcast")
 class Podcast : public Crails::Cms::BlogPost
 {
   odb_instantiable()
@@ -23,5 +23,7 @@ public:
   std::string get_audio_url() const;
 
 private:
+  void set_audio_from_id(Crails::Odb::id_type);
+  void set_audio_from_url(const std::string&);
   std::shared_ptr<Attachment> audio;
 };

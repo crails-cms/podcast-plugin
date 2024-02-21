@@ -1,0 +1,44 @@
+#include <crails/cms/views/style.hpp>
+
+const Crails::Cms::Style& style = Crails::Cms::Style::singleton::require();
+const std::string @id = "podcast-player";
+const std::string @src;
+
+// END LINKING
+<%= style.card() yields %>
+  <div id="<%= id %>" class="audio-player">
+    <div class="timeline">
+      <div class="progress"></div>
+    </div>
+    <div class="controls">
+      <div class="play-container">
+        <button class="toggle-play play <%= style.button_classes() %>">
+          <span data-role="play">&#9205;</span>
+          <span data-role="pause">&#9208;</span>
+        </button>
+      </div>
+      <div class="time">
+        <div class="current">0:00</div>
+        <div class="divider">/</div>
+        <div class="length"></div>
+      </div>
+      <div class="volume-container">
+        <button class="volume-button <%= style.button_classes() %>">
+          <span data-role="mute">&#x1F507;</span>
+          <span data-role="default">&#x1F508;</span>
+        </button>
+        
+        <div class="volume-slider">
+          <div class="progress volume-percentage"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% yields-end %>
+
+<script type="text/javascript">
+Cms.createAudioPlayer(
+  document.querySelector("#<%= id %>"),
+  "<%= src %>"
+);
+</script>

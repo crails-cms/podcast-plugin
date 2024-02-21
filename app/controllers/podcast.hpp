@@ -11,6 +11,7 @@ public:
 
   PodcastController(Crails::Context& context) : Super(context)
   {
+    vars["local_route"] = "/podcast";
   }
 
   std::string get_view_scope() const override { return "podcast"; }

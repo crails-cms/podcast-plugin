@@ -13,20 +13,15 @@ void initialize_plugin_routes()
 
   router.scope(PodcastController::scope, [&]()
   {
-    cms_routes.set_path_for<PodcastController>(router);
-    router.match_action("GET", "/",      PodcastController, index);
-    router.match_action("GET", "/:slug", PodcastController, show);
+    cms_routes.register_blog_routes<PodcastController>(router);
   });
 
   router.scope(AdminApplicationController::scope, [&]()
   {
     router.scope(PodcastController::scope, [&]()
     {
-      admin_menu.add({3, "podcasts", router.get_current_scope()});
-      cms_routes.set_path_for<AdminPodcastController>(router);
-      router.match_action("PUT",  "/preview", PodcastController, preview);
-      router.match_action("POST", "/preview", PodcastController, preview);
-      router.libcrails_cms_admin_crud("/", AdminPodcastController);
+      admin_menu.add({4, "podcasts", router.get_current_scope()});
+      cms_routes.register_blog_admin_routes<PodcastController, AdminPodcastController>(router);
     });
   });
 }

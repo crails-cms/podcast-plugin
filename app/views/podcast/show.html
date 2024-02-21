@@ -1,0 +1,40 @@
+#include <crails/cms/time.hpp>
+#include <crails/cms/views/style.hpp>
+#include <crails/cms/models/settings.hpp>
+#include <crails/i18n.hpp>
+#include "app/models/podcast.hpp"
+
+const Crails::Cms::Settings& @settings;
+const Crails::Cms::Style& style = settings.get_style();
+const Crails::Cms::BlogPost& @model;
+const Podcast& podcast = reinterpret_cast<const Podcast&>(model);
+bool @preview = false;
+
+// END LINKING
+
+<%= style.section(1, {}) yields %>
+  <h1><%= model.get_title() %></h1>
+
+  <h4><%= model.get_description() %></h4>
+
+  <div class="audio-player-container">
+    <%= partial("podcast/_audio_player", {
+      {"src", podcast.get_audio_url()}
+    }) %>
+
+    <% if (model.get_thumbnail_url().length()) do %>
+      <%= style.thumbnail(model.get_thumbnail_url()) %>
+    <% end %>
+  </div>
+<% yields-end %>
+
+<%= style.section(2, {}) yields %>
+  <div class="body">
+    <%= model.get_body() %>
+  </div>
+<% yields-end %>
+
+<% if (preview) do %>
+  <%= partial("preview_script") %>
+<% end %>
+
