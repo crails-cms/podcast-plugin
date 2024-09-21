@@ -20,7 +20,7 @@ void Podcast::edit(Data params)
   if (params["audio_id"].exists())
     set_audio_from_id(params["audio_id"].as<Odb::id_type>());
   else if (params["audio_url"].exists())
-    set_audio_url(params["audio_url"]);
+    set_audio_from_url(params["audio_url"]);
 }
 
 void Podcast::set_audio_from_id(Odb::id_type id)
