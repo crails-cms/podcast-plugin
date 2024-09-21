@@ -1,5 +1,6 @@
 #include <string>
 #include <crails/i18n_settings.hpp>
+#include "sitemap.hpp"
 
 void initialize_plugin_routes();
 void initialize_plugin_renderers();
@@ -31,6 +32,11 @@ extern "C"
   void uninstall()
   {
     uninstall_plugin_database();
+  }
+
+  std::unique_ptr<Crails::Cms::SiteMap::Index> plugin_sitemap_index()
+  {
+    return std::make_unique<PodcastSitemap>();
   }
 
   std::string_view plugin_javascript()
